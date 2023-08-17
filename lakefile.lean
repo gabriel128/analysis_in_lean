@@ -10,6 +10,7 @@ lean_lib «AnalysisInLean» {
 }
 
 lean_lib Natu
+lean_lib Tactics
 
 @[default_target]
 lean_exe «analysis_in_lean» {
