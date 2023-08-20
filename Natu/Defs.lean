@@ -1,6 +1,7 @@
 import Mathlib.Tactic.Basic
 import Mathlib.Tactic.Cases
 import Std.CodeAction
+import Tactics
 
 namespace Natu
 
@@ -24,6 +25,7 @@ def nat_from_natu : Natu -> Nat
 instance: ToString Natu where
   toString n := toString (nat_from_natu n)
 
+@[default_instance]
 instance : OfNat Natu n where
   ofNat := nat_into_natu n
 
@@ -31,19 +33,21 @@ instance : OfNat Natu n where
 axiom zero_is_not_succ : ∀ m : ℕ', succ m ≠ zero
 
 -- Axiom 2.4
-axiom succ_elim (m n : ℕ') : succ m = succ n → m = n
+axiom succ_elim {m n : ℕ'} : succ m = succ n → m = n
 
+def Pred (t : Type u) : Type u := t → Prop
 -- Axiom 2.5
 axiom math_induction (n : ℕ') (P: ℕ' → Prop) (hzero : P zero): (P n → P (succ n)) -> P n
 
-
-example : (3:ℕ') ≠ 2 := by
-  rw [Ne, Not]
-  have three_is_3: 3 = nat_into_natu 3 := by rfl
-  have two_is_2: 2 = nat_into_natu 2 := by rfl
-  rw [two_is_2, three_is_3]
-  intro h
-  have h1 : 2 = 1 := succ_elim _ _ h
-  have h2 : 1 = 0 := succ_elim _ _ h1
+theorem three_not_eq_two : 3 ≠ 2 := by
+  -- generalize 3 = x
+  -- generalize 2 = y
+  by_contra h
+  have h2 : 1 = 0 := succ_elim (succ_elim h)
   exact zero_is_not_succ zero h2
-  done
+  qed
+
+-- Definition 2.2.7
+def Pos (n: ℕ'): Prop := n ≠ 0
+
+axiom is_positive: ∀ (n: ℕ'), (Pos n) ↔ n ≠ 0
