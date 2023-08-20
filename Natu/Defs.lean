@@ -39,7 +39,7 @@ def Pred (t : Type u) : Type u := t → Prop
 -- Axiom 2.5
 axiom math_induction (n : ℕ') (P: ℕ' → Prop) (hzero : P zero): (P n → P (succ n)) -> P n
 
-example : 3 ≠ 2 := by
+theorem three_not_eq_two : 3 ≠ 2 := by
   rw [Ne, Not]
   intro h
   have h1 : 2 = 1 := succ_elim _ _ h

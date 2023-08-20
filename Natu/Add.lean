@@ -107,3 +107,11 @@ theorem zero_sum_implies_zero (a b : ℕ'): a + b = 0 -> a = 0 ∧ b = 0 := by
   have b' := zero_sum_implies_b_zero _ _ h
   exact ⟨a', b'⟩
   qed
+
+lemma add_zero_implies_zero (a b : ℕ'): a = a + b -> b = 0 := by
+  intro h
+  rw [<-add_zero a, add_assoc, add_comm 0 b, <-add_assoc, add_zero (a + b)] at h
+  have h1 := cancellation_law a 0 b h
+  apply Eq.symm
+  exact h1
+  qed
