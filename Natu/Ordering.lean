@@ -1,5 +1,7 @@
 import Natu.Defs
 import Natu.Add
+import Mathlib.Tactic.Relation.Rfl
+import Mathlib.Init.Algebra.Order
 
 namespace Natu
 
@@ -41,11 +43,13 @@ theorem three_less_than_four : (3: ℕ') < 4 := by
 
 -- Proposition 2.2.12
 -- a
-theorem order_refl (a : ℕ') : a ≤ a := by
+theorem order_rfl (a : ℕ') : a ≤ a := by
   rw [lte_def]
   exists 0
   rw [add_zero]
   qed
+
+attribute [refl] order_rfl
 
 -- b
 theorem order_trans (a b c : ℕ') (h1: a ≤ b) (h2: b ≤ c): a ≤ c := by
@@ -76,4 +80,15 @@ theorem order_antysymm (a b : ℕ') (h1: a ≤ b) (h2: b ≤ a) : a = b := by
     rw [add_comm] at h4
     exact h4
   rw [h3, add_zero]
+  qed
+
+theorem inequeality_imples_ne (a b : ℕ') (h: a < b) : a ≠ b := sorry
+
+theorem three_not_eq_two' : 3 ≠ 2 := by
+  -- have h: 2 ≤ 3 := by
+  --   rw [lt_def]
+  --   exists 1
+  sorry
+
+
   qed

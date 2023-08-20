@@ -33,17 +33,17 @@ instance : OfNat Natu n where
 axiom zero_is_not_succ : ∀ m : ℕ', succ m ≠ zero
 
 -- Axiom 2.4
-axiom succ_elim (m n : ℕ') : succ m = succ n → m = n
+axiom succ_elim {m n : ℕ'} : succ m = succ n → m = n
 
 def Pred (t : Type u) : Type u := t → Prop
 -- Axiom 2.5
 axiom math_induction (n : ℕ') (P: ℕ' → Prop) (hzero : P zero): (P n → P (succ n)) -> P n
 
 theorem three_not_eq_two : 3 ≠ 2 := by
-  rw [Ne, Not]
-  intro h
-  have h1 : 2 = 1 := succ_elim _ _ h
-  have h2 : 1 = 0 := succ_elim _ _ h1
+  -- generalize 3 = x
+  -- generalize 2 = y
+  by_contra h
+  have h2 : 1 = 0 := succ_elim (succ_elim h)
   exact zero_is_not_succ zero h2
   qed
 
