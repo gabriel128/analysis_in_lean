@@ -1,10 +1,11 @@
-import Natu.Defs
+import AnalysisInLean.Natu.Defs
+import Mathlib.Tactic.ByContra
 
-namespace Natu
+set_option linter.unusedTactic false
 
 open Natu
 
-def add : Natu -> Natu -> Natu
+def Natu.add : Natu -> Natu -> Natu
   | zero, m => m
   | (succ n), m => Natu.succ (Natu.add n m)
 
@@ -66,7 +67,7 @@ theorem cancellation_law (a b c : ℕ') : a + b = a + c -> b = c := by
     exact h
   · intro ih
     intro h
-    have h2 := succ_elim (a + b) (a + c)
+    have h2 := @succ_elim (a + b) (a + c)
     have h3 := h2 h
     exact ih h3
   qed

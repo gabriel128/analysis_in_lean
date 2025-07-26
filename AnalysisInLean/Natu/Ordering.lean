@@ -1,22 +1,23 @@
-import Natu.Defs
-import Natu.Add
+import AnalysisInLean.Natu.Defs
+import AnalysisInLean.Natu.Add
 import Mathlib.Tactic.Relation.Rfl
-import Mathlib.Init.Algebra.Order
+import Mathlib.Tactic.ByContra
+-- import Mathlib.Init.Algebra.Order
 
-namespace Natu
+set_option linter.unusedTactic false
 
 open Natu
 
-def lte (a b : ℕ'): Prop :=  ∃ (c : ℕ'), b = a + c
-def lt (a b : ℕ'): Prop :=  ∃ (c : ℕ'), b = a + c ∧ a ≠ b
+def Natu.lte (a b : ℕ'): Prop :=  ∃ (c : ℕ'), b = a + c
+def Natu.lt (a b : ℕ'): Prop :=  ∃ (c : ℕ'), b = a + c ∧ a ≠ b
 
 instance: LE Natu where
-  le := lte
+  le := Natu.lte
 
 instance: LT Natu where
-  lt := lt
+  lt := Natu.lt
 
-theorem lte_def_test : Natu.lte = (.≤.) := by rfl
+theorem lte_def_test : Natu.lte = (·≤·) := by rfl
 
 theorem lte_def (a b : ℕ'): a ≤ b ↔ ∃ (c : ℕ'), b = a + c := by rfl
 
@@ -36,7 +37,7 @@ theorem three_less_than_four : (3: ℕ') < 4 := by
   · rfl
   · rw [Ne, Not]
     intro h
-    have h1 : 2 = 3 := succ_elim _ _ h
+    have h1 : 2 = 3 := succ_elim h
     have h2 : 3 = 2 := Eq.symm h1
     exact three_not_eq_two h2
   qed
@@ -82,13 +83,18 @@ theorem order_antysymm (a b : ℕ') (h1: a ≤ b) (h2: b ≤ a) : a = b := by
   rw [h3, add_zero]
   qed
 
-theorem inequeality_imples_ne (a b : ℕ') (h: a < b) : a ≠ b := sorry
-
-theorem three_not_eq_two' : 3 ≠ 2 := by
-  -- have h: 2 ≤ 3 := by
-  --   rw [lt_def]
-  --   exists 1
-  sorry
-
-
+theorem inequeality_imples_ne (a b : ℕ') (h: a < b) : a ≠ b := by
+  intro h1
+  rw [lt_def] at h
+  obtain ⟨_, h2⟩ := h
+  obtain ⟨_, h3⟩ := h2
+  exact h3 h1
   qed
+
+theorem three_not_eq_two' : (3:ℕ') ≠ 2 := by
+  have h: 2 ≤ 3 := by
+    rw [lte_def]
+    exists 1
+  rw [Ne, Not]
+  intro h1
+  sorry

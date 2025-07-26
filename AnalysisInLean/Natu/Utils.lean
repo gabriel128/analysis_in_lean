@@ -1,6 +1,5 @@
-import Natu.Defs
+import AnalysisInLean.Natu.Defs
 
-namespace Natu
 open Natu
 
 lemma zero_is_0 : Natu.zero = 0 := by rfl

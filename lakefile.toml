@@ -1,0 +1,56 @@
+name = "analysis_in_lean"
+version = "0.1.0"
+defaultTargets = ["analysis_in_lean"]
+
+[[lean_lib]]
+name = "AnalysisInLean"
+
+[[lean_lib]]
+name = "Tactics"
+
+[[lean_exe]]
+name = "analysis_in_lean"
+root = "Main"
+
+[[require]]
+name = "batteries"
+scope = "leanprover-community"
+rev = "main"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "master"
+
+[leanOptions]
+weak.linter.docPrime = false
+weak.linter.hashCommand = true
+weak.linter.oldObtain = true
+weak.linter.refine = true
+weak.linter.style.cdot = true
+weak.linter.style.dollarSyntax = true
+weak.linter.style.header = true
+weak.linter.style.lambdaSyntax = true
+weak.linter.style.longLine = true
+weak.linter.style.longFile = 1500
+weak.linter.style.missingEnd = true
+weak.linter.style.multiGoal = true
+weak.linter.style.setOption = true
+weak.linter.style.unusedTactic = false
+pp.unicode.fun = true
+
+[moreserveroptions]
+linter.docPrime = false
+linter.hashCommand = true
+linter.oldObtain = true
+linter.refine = true
+linter.style.cdot = true
+linter.style.dollarSyntax = true
+linter.style.header = true
+linter.style.lambdaSyntax = true
+linter.style.longLine = true
+linter.style.longFile = 1500
+linter.style.missingEnd = true
+linter.style.multiGoal = true
+linter.style.setOption = true
+linter.unusedTactic = false
